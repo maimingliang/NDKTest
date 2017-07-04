@@ -24,6 +24,7 @@ public class NDKActivity extends AppCompatActivity implements View.OnClickListen
     private Button mButton5;
     private String mDecryptPath;
     private String mSplitPath;
+    private String mMergePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class NDKActivity extends AppCompatActivity implements View.OnClickListen
         mDecryptPath = "/sdcard/DCIM/Camera/20170604_182410.jpg";
         mSplitPath = "/sdcard/DCIM/Camera/20170604_182410.jpg";
 
+        mMergePath = "/sdcard/DCIM/Camera/20170604_181902.jpg";
 
 
     }
@@ -91,9 +93,10 @@ public class NDKActivity extends AppCompatActivity implements View.OnClickListen
                 HelloNDK.splitFile(mSplitPath,".b",4);
                 break;
             case R.id.btn4:
+                HelloNDK.mergeFile(mSplitPath,mMergePath,".b",".jpg",4);
                 break;
             case R.id.btn5:
-                Intent imageFileIntent = getImageFileIntent(mEncryptPath);
+                Intent imageFileIntent = getImageFileIntent(mMergePath);
 
                 startActivity(imageFileIntent);
                 break;

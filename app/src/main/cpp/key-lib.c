@@ -437,3 +437,78 @@ Java_com_miaml_ndktest_HelloNDK_splitFile(JNIEnv *env, jclass type, jstring file
     (*env)->ReleaseStringUTFChars(env, filePath_, filePath);
     (*env)->ReleaseStringUTFChars(env, suffix_, suffix);
 }
+
+JNIEXPORT void JNICALL
+Java_com_miaml_ndktest_HelloNDK_mergeFile(JNIEnv *env, jclass type, jstring filePath_,
+                                          jstring mergeFilePath_, jstring suffix_,
+                                          jstring mergeSuffix_, jint splitNum) {
+    const char *filePath = (*env)->GetStringUTFChars(env, filePath_, 0);
+    const char *mergeFilePath = (*env)->GetStringUTFChars(env, mergeFilePath_, 0);
+    const char *suffix = (*env)->GetStringUTFChars(env, suffix_, 0);
+    const char *mergeSuffix = (*env)->GetStringUTFChars(env, mergeSuffix_, 0);
+
+    const char* tag="Java_com_miaml_ndktest_HelloNDK_mergeFile";
+    // TODO
+
+    char ** split_file_path_list = (char **)malloc(sizeof(char*) * splitNum);
+
+    int len = strlen(filePath);
+    int suffixLen = strlen(mergeSuffix);
+
+
+    //找出分割文件的路径
+    char  tempSplitFilePah[len + suffixLen + 5];
+
+    strcpy(tempSplitFilePah,filePath);
+    strtok(tempSplitFilePah,".");
+    strcat(tempSplitFilePah,"_%d");
+    strcat(tempSplitFilePah,suffix);
+
+    LOGE(tag,"%s",tempSplitFilePah);
+
+    for (int i = 0; i < splitNum; i++) {
+
+        split_file_path_list[i] = malloc(sizeof(char) * 128);
+
+        sprintf(split_file_path_list[i],tempSplitFilePah,i);
+        LOGE(tag,"%s",split_file_path_list[i]);//分割文件的路径
+
+    }
+
+    FILE* fwp = fopen(mergeFilePath,"wb");
+
+    for (int i = 0; i < splitNum; i++) {
+
+        FILE* frp = fopen(split_file_path_list[i],"rb");
+
+        int fileSize = getFileSize(split_file_path_list[i]);
+
+
+        for (int j = 0; j < fileSize; j++) {
+            fputc(fgetc(frp),fwp);
+        }
+
+        fclose(frp);
+
+        //每合并一个文件，删除它
+        remove(split_file_path_list[i]);
+
+    }
+
+
+
+    fclose(fwp);
+
+    for (int i = 0; i < splitNum; i++) {
+        free(split_file_path_list[i]);
+    }
+
+    free(split_file_path_list);
+
+
+
+    (*env)->ReleaseStringUTFChars(env, filePath_, filePath);
+    (*env)->ReleaseStringUTFChars(env, mergeFilePath_, mergeFilePath);
+    (*env)->ReleaseStringUTFChars(env, suffix_, suffix);
+    (*env)->ReleaseStringUTFChars(env, mergeSuffix_, mergeSuffix);
+}
