@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-frtti -fexceptions"
+                cppFlags "-std=c++11"
 //                 指定只用clang编译器
 //                 Clang是一个C语言、Objective-C、C++语言的轻量级编译器。
                 arguments "-DANDROID_TOOLCHAIN=clang"
@@ -29,7 +29,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path "CMakeLists.txt"
+            path "src/main/cpp/CMakeLists.txt"
         }
     }
 }
@@ -41,4 +41,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
-}
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.zhy:okhttputils:2.6.2'
+    compile "com.google.code.gson:gson:2.6.2"
+
+ }

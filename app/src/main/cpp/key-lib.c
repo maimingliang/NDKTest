@@ -86,7 +86,7 @@ Java_com_miaml_ndktest_MainActivity_accessJavaMethod(JNIEnv *env, jobject instan
     jmethodID jmId = (*env)->GetMethodID(env, jclazz, "print", "(I)V");
 
 
-      (*env)->CallVoidMethod(env, instance, jmId, 100);
+    (*env)->CallVoidMethod(env, instance, jmId, 100);
 
 //    printf(" num = %d \n",num);
 
@@ -139,7 +139,7 @@ Java_com_miaml_ndktest_MainActivity_cTransfrom(JNIEnv *env, jobject instance, js
 
     //构建一个50的byte数组
 
-   jbyteArray bytes = (*env)->NewByteArray(env,50);
+    jbyteArray bytes = (*env)->NewByteArray(env,50);
 
     (*env)->SetByteArrayRegion(env,bytes,0,strlen(buff),buff);
 
@@ -512,3 +512,4 @@ Java_com_miaml_ndktest_HelloNDK_mergeFile(JNIEnv *env, jclass type, jstring file
     (*env)->ReleaseStringUTFChars(env, suffix_, suffix);
     (*env)->ReleaseStringUTFChars(env, mergeSuffix_, mergeSuffix);
 }
+

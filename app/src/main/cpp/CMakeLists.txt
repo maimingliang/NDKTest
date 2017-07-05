@@ -9,6 +9,14 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds it for you.
 # Gradle automatically packages shared libraries with your APK.
 
+
+set(CMAKE_VERBOSE_MAKEFILE on) #输出详细的编译和链接信息
+
+set(bzip2_src_DIR ${CMAKE_SOURCE_DIR}) #表示CMake的资源目录
+
+add_subdirectory(${bzip2_src_DIR}/bzip2)
+
+
 add_library( # Sets the name of the library.
              native-lib
 
@@ -18,8 +26,9 @@ add_library( # Sets the name of the library.
              # Provides a relative path to your source file(s).
              # Associated headers in the same location as their source
              # file are automatically included.
-             src/main/cpp/native-lib.cpp
-             src/main/cpp/key-lib.c
+             native-lib.cpp
+             key-lib.c
+             bspatch.c
              )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -27,6 +36,13 @@ add_library( # Sets the name of the library.
 # default, you only need to specify the name of the public NDK library
 # you want to add. CMake verifies that the library exists before
 # completing its build.
+
+
+#CMAKE_CXX_FLAGS "-Wall" c++编译器参数
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -Wall -DGLM_FORCE_SIZE_T_LENGTH")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGLM_FORCE_RADIANS")
+
 
 find_library( # Sets the name of the path variable.
               log-lib

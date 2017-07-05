@@ -24,4 +24,18 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="button"/>
+
+    <Button
+        android:layout_marginTop="100dp"
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="apkupdate"/>
+
+    <Button
+        android:layout_marginTop="150dp"
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="newApk"/>
 </RelativeLayout>
